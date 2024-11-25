@@ -39,7 +39,7 @@ FIGURE 8:ACCURACY OF OUR MODEL	9
 
 Abstract
 
- 	The presented system is a computer vision-based solution designed to enhance pedestrian safety at crosswalks by dynamically controlling traffic signals based on pedestrian movement. The system leverages state-of-the-art object detection techniques, employing YOLO (You Only Look Once) models to accurately identify pedestrians and the crosswalk within a video stream captured by a camera.
+The presented system is a computer vision-based solution designed to enhance pedestrian safety at crosswalks by dynamically controlling traffic signals based on pedestrian movement. The system leverages state-of-the-art object detection techniques, employing YOLO (You Only Look Once) models to accurately identify pedestrians and the crosswalk within a video stream captured by a camera.
 Upon detecting pedestrians, the system calculates their distances from both endpoints of the crosswalk. This distance measurement serves as a crucial metric for determining pedestrian behavior, such as whether they are approaching or moving away from the crosswalk.
 Based on the observed pedestrian movements relative to the crosswalk endpoints, the system dynamically adjusts the state of a simulated traffic light. When pedestrians are detected within close proximity to the crosswalk, the traffic light transitions to a yellow state and then red state, signaling vehicles to prepare to stop or halt, respectively. Conversely, when pedestrians move away from the crosswalk, indicating a safe passage for vehicles, the traffic light switches to a green state, allowing traffic to proceed.
  
@@ -56,7 +56,7 @@ Stakeholders:
 •	City/Transportation Department: Stakeholders responsible for managing traffic infrastructure and ensuring pedestrian safety. They benefit from a system that can improve efficiency, reduce accidents, and potentially lower resource consumption (energy). 
 •	Law Enforcement: Stakeholders who may benefit from a system that reduces pedestrian-vehicle accidents.
 System Flow Diagram:
- 
+![alt text](images/image2.png)
 Figure 1:System Flow Diagram
 
 Datasets
@@ -69,22 +69,17 @@ Pretrained YOLO Model Integration:
 To capitalize on the strengths of both the COCO dataset and our customized crosswalk dataset, we strategically employed a pre-trained YOLO model. YOLO models pre-trained on the COCO dataset, a massive collection of everyday objects, are renowned for their robustness and remarkable ability to generalize across diverse object detection tasks. This generalized knowledge serves as a powerful foundation for our approach. By leveraging transfer learning, we essentially aimed to harness the pre-trained YOLO model's pre-existing understanding of object recognition and localization from COCO. However, we didn't stop there. We further fine-tuned the model on our meticulously curated crosswalk dataset. This fine-tuning process involved meticulously adjusting the model's internal parameters to specialize in the intricacies of crosswalk detection. Through this combined approach, we aspired to achieve the best of both worlds: leveraging the COCO model's robust foundation while simultaneously imbuing it with the specialized knowledge required for superior crosswalk detection.Model
 Crosswalk Training:
 	As none of the pretrained models available could detect crosswalks or zebra crossings we custom trained out model using YOLO train feature available by Ultralytics. We used YOLOv8 for the whole project as of now YolovX is also available but the results and support of YOLOv8 is easily and widely available.
- 
+![alt text](images/image1.png)
 Figure 2: Training for crosswalk Detection
 https://universe.roboflow.com/school-sacst/finalproject3/model/1
 Pedestrian Detection and Tracking:
 	We used normal pretrained YOLOv8.n model for pedestrian detection and tracking the distance. We obtained our results in following steps:
 1.	Use model1 for detecting the crosswalk in the frame.
  
-Figure 3: Detecting crosswalk in the frame
 2.	Use visioneye feature provided by ultralytics to and adjust them to starting and ending points of the crosswalk
- 
-Figure 4: Adjusting starting and Ending points of crosswalk
- 
-Figure 5: Annotating the corner points
+
 3.	Track the distance from both ends, if in the vicinity of any of the points we turn the signals to red
- 
-Figure 6: Calculating Distance
+
 4.	And after some a certain delay we turn the light back to green or when no person is about to cross the crosswalk.
 Code Working:
 1.	Importing Libraries: The code begins by importing necessary libraries including OpenCV for image processing, NumPy for numerical operations, time for time-related functions, math for mathematical calculations, and the YOLO object detection framework from the Ultralytics library.
@@ -96,8 +91,8 @@ Code Working:
 7.	User Interaction: The code waits for the user to press 'q' to quit the application.
 8.	Cleanup: After the main loop exits, the code releases video resources and closes any remaining windows.
 Output:
- 
-Figure 7:Demo from the Output
+![alt text](images/image0.png)
+Figure 3:Demo from the Output
 •	In the above image the right-hand side simulates the traffic signals. 
 •	The frame here detects the crosswalk and the people 
 •	The pink points represent the crosswalk edges 
@@ -114,8 +109,8 @@ Real-world Evaluation
 •	Realized Accuracy: This translates to an accuracy of 93% for the test video.
 Combined Accuracy and Limitations
 •	Overall Accuracy: Considering both the claimed benchmark (95%) and the test video results (93%), we can estimate a combined accuracy of approximately 88%.
- 
-Figure 8:Accuracy of our model
+![alt text](images/image.png)
+Figure 4:Accuracy of our model
 Challenges:
 •	Data Disparity: Disparities between the training data used for the pedestrian detection model and the real-world data encountered during deployment can lead to accuracy drops. The model might struggle to identify pedestrians in various lighting conditions, clothing styles, or poses not sufficiently represented in the training data.
 •	Real-Time Performance: Integrating the computer vision model with the traffic light control system introduces the challenge of real-time performance. Delays in processing video frames due to computational demands can lead to missed detections or slow responses to pedestrian presence, impacting both safety and traffic flow.
